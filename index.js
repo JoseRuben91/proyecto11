@@ -3,7 +3,6 @@ async function fetchRover() {
   try {
     //Petición a la API de la nasa para conocer los datos del rover Curiosity
     const response = await axios.get('https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity?api_key=zA6lqZWflc9FE2YwBrE0AxaMaRu7OFzzhlktodkg');
-    //console.log(`GET: Datos del rover`, response.data);
     //Hacer que la función regrese los datos del rover obtenidos de la petición a la API para poderlos utilizar
     return response.data.rover;
   } catch (errors) {
@@ -29,16 +28,13 @@ var row = document.querySelector('.row');
 //await provoca que la ejecución sea pausada hasta que sea terminada o rechazada
 async function mostrarFoto() {
   const datosRover = await fetchRover();
-  console.log(datosRover.name);
-  console.log(datosRover.max_sol.toString());
   const maxSol = datosRover.max_sol;
   var solesRover = document.getElementById('datos-rover');//seleccionara el elemento datos-rover para contar los dias 
   solesRover.setAttribute('class', 'datos-rover')
   solesRover.innerHTML = `El rover ${datosRover.name} lleva ${datosRover.max_sol.toString()} en Marte <br><br> 
                           En seguida se muestran algunas imágenes tomadas durante el último sol`
   const arregloFotos = await fetchNasa(maxSol);
-  console.log(arregloFotos);
-  //ciclo ford para contar las fotos a mostrar dentro de nuestro arregloFotos donde se guardaran.
+  //ciclo for para iterar nuestro arreglo de fotos.
   for (var i = 0; i < arregloFotos.length; i++) {
     //Creación del contenedor de la tarjeta
     var col = document.createElement('div');
